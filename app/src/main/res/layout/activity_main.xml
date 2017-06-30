@@ -68,6 +68,14 @@
             android:onClick="testCountDownLatch2"
             android:text="汇总(把异步转化为同步2)" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testAtomicInteger"
+            android:text="原子性操作int atomic Integer" />
+
+
+
     </LinearLayout>
 
 </ScrollView>

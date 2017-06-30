@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
@@ -26,6 +27,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -226,7 +228,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("DaoExample", "tid:" + Thread.currentThread().getId() + " sleep ...");
                     Thread.sleep(1000);
                     Log.d("DaoExample", "tid:" + Thread.currentThread().getId() + " finised");
-                    int i = 5/0;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -237,6 +238,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * 程序的调用方式就只有两种，一种同步等待结果，一种是异步，回调，
+     * 现在需要的是异步转为同步
      * 异步转化为同步
      * @param v
      */
@@ -256,7 +259,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * CountDownLatch 一种汇总模型，也是一种异步转为同步的模型，比如说领导手上有一件任务，
+     * 分成了很多的小任务，每一个worker拿到小任务后开始做，领导这是处于等待的一个状态，
+     * 当worker做完小任务后把消息同步给领导，当且仅当全部的小任务做完，领导的任务才算是做完
+     * @param v
+     */
     public void testCountDownLatch2(View v) {
         new Thread(new Runnable() {
             @Override
@@ -270,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log.d("DaoExample",Thread.currentThread().getId() + " 领导开始等待");
                     long beginTime = System.currentTimeMillis();
-                    countDownLatch.await();
+                    countDownLatch.await();// 初始化的int减少到0时，方法返回
                     Log.d("DaoExample",Thread.currentThread().getId() + " 领导汇总花费time:"+(System.currentTimeMillis()-beginTime));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -278,6 +286,31 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+    public void testRandom(View v) {
+        Random random = new Random();
+        random.nextInt(10);
+    }
+
+    /**
+     * AtomicInteger 线程安全的增减原子操作
+     * @param v
+     */
+    public void testAtomicInteger(View v) {
+        // AtomicInteger 并发没问题, 提供了一系列的线程安全的增减操作接口
+        final AtomicInteger atomicInteger = new AtomicInteger();
+        for (int i = 0; i < 100000; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int temp = atomicInteger.addAndGet(1);
+                    Log.d("DaoExample", "temp:"+temp);
+                }
+            }).start();
+        }
+    }
+
+
 
     class Task implements Runnable {
         private CountDownLatch countDownLatch;
