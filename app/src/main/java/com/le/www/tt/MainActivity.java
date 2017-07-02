@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -310,6 +312,51 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void testLogByStringFormat(View v) {
+        String msg = "current tid : %d , content : %s";
+//        String content = String.format(msg, Thread.currentThread().getId(), "this is test");
+//        Log.i(TAG, content);
+
+        d(msg, Thread.currentThread().getId(), "this is test");
+
+        String msg2 = "current tid";
+        d(msg2);
+    }
+
+
+    static final boolean DEBUG = true;
+    static String TAG = "DaoExample";
+    public static void d(String format, Object... args) {
+        if (DEBUG) {
+            String msg = (args == null ? format : String.format(format, args));
+            Log.i(TAG, msg);
+        }
+    }
+
+
+    public void testException(View v) {
+        try {
+            throwsException();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        throwsException2();
+    }
+
+
+    private void  throwsException() throws IOException{
+
+    }
+
+    private void throwsException2() {
+
+        List<Integer> list = new ArrayList<>(-1);
+//        list.get(6);
+//        if (5 / 0 == 2) {产生运行时
+            throw new IndexOutOfBoundsException("xx");
+//        }
+    }
 
 
     class Task implements Runnable {

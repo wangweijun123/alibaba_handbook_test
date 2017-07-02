@@ -74,7 +74,11 @@
             android:onClick="testAtomicInteger"
             android:text="原子性操作int atomic Integer" />
 
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testLogByStringFormat"
+            android:text="String.format 的形式打印，在真正打印的时候判断debug" />
 
     </LinearLayout>
 
