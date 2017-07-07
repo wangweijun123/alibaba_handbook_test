@@ -332,10 +332,41 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    int index;
+    ConnectionPool pool;
+    public void testThreadPoolAndNotify(View v) {
+        pool = new ConnectionPool();
+        pool.start();
+
+        for (int i = 0; i < 2; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            Log.i(TAG, "work sleep 1s tid:"+Thread.currentThread().getId());
+                            Thread.sleep(5000);
+                            Log.i(TAG, "work sleep finised tid:"+Thread.currentThread().getId());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Connection conn = new Connection(index);
+                        index++;
+                        pool.addConnection(conn);
+                    }
+                }
+            }).start();
+        }
+    }
+
+    public void stopCleanThreadPool(View v) {
+        Log.i(TAG, "click stopCleanThreadPool");
+        pool.quit();
+    }
 
 
     static final boolean DEBUG = true;
-    static String TAG = "DaoExample";
+    public static String TAG = "DaoExample";
     public static void d(String format, Object... args) {
         if (DEBUG) {
             String msg = (args == null ? format : String.format(format, args));

@@ -80,6 +80,20 @@
             android:onClick="testLogByStringFormat"
             android:text="String.format 的形式打印，在真正打印的时候判断debug" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testThreadPoolAndNotify"
+            android:text="后台使用线程池的方式runnable死循环清理连接, 其他线程来唤醒它" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="stopCleanThreadPool"
+            android:text="取消清理线程池" />
+
+
+
     </LinearLayout>
 
 </ScrollView>
