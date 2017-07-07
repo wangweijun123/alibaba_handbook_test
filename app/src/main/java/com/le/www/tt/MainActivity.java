@@ -323,6 +323,16 @@ public class MainActivity extends AppCompatActivity {
         d(msg2);
     }
 
+    private volatile boolean existed = false;
+
+    public void testBooleanSync(View v) {
+        synchronized (this) {
+            if (existed) {
+                existed = true;
+            }
+        }
+    }
+
 
     static final boolean DEBUG = true;
     static String TAG = "DaoExample";
