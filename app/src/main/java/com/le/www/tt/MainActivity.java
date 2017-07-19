@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.le.www.tt.interceptor.Chain;
+import com.le.www.tt.interceptor.Request;
+import com.le.www.tt.interceptor.Response;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -363,6 +367,17 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "click stopCleanThreadPool");
         pool.quit();
     }
+
+
+
+    public void testInterceptor(View v) {
+        Request request = new Request();
+        Chain chain = new Chain(request);
+        Response response = chain.process();
+        Log.i(TAG, "request content:"+request.content + ", response content:"+response.content);
+
+    }
+
 
 
     static final boolean DEBUG = true;
