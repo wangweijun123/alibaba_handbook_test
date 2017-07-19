@@ -92,6 +92,12 @@
             android:onClick="stopCleanThreadPool"
             android:text="取消清理线程池" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testForkAndJoin"
+            android:text="测试fork与join模型" />
+
 
 
     </LinearLayout>

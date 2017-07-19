@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.le.www.tt.fork.join.Master;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -438,5 +440,26 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    int number;
+    public void testForkAndJoin(View v) {
+        Master master =  new Master();
+        Master.CallBack callBack = new Master.CallBack() {
+            @Override
+            public void itemfinished() {
+                synchronized (MainActivity.this) {
+                    number ++;
+                    Log.i(Master.TAG, "number:"+number+" thread id:"+Thread.currentThread().getId());
+                }
+            }
+        };
+        Random random = new Random();
+        for (int i=0; i<10; i++) {
+            int value = random.nextInt(5);
+            Master.Task task = new Master.Task(i, value*1000, callBack);
+            master.execute(task);
+        }
+
     }
 }
