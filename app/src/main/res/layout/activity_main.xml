@@ -105,7 +105,11 @@
             android:onClick="testForkAndJoin"
             android:text="测试fork与join模型" />
 
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testModifyVari"
+            android:text="测试引用传递" />
     </LinearLayout>
 
 </ScrollView>

@@ -429,9 +429,9 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
 
             try {
-                Log.d("DaoExample",Thread.currentThread().getId() + " 开始做任务");
+                Log.i("DaoExample",Thread.currentThread().getId() + " 开始做任务");
                 Thread.sleep(dealyTime);
-                Log.d("DaoExample",Thread.currentThread().getId() + " 完成任务 spend time:"+dealyTime);
+                Log.i("DaoExample",Thread.currentThread().getId() + " 完成任务 spend time:"+dealyTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
@@ -447,9 +447,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                Log.d("DaoExample", "tid:" + Thread.currentThread().getId() + " sleep ...");
+                Log.i("DaoExample", "tid:" + Thread.currentThread().getId() + " sleep ...");
                 Thread.sleep(1000);
-                Log.d("DaoExample", "tid:" + Thread.currentThread().getId() + " finised");
+                Log.i("DaoExample", "tid:" + Thread.currentThread().getId() + " finised");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -457,6 +457,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     int number;
+
+    /**
+     * 任务先分解，然后再合并
+     * 汇总模式
+     * @param v
+     */
     public void testForkAndJoin(View v) {
         Master master =  new Master();
         Master.CallBack callBack = new Master.CallBack() {
@@ -475,5 +481,50 @@ public class MainActivity extends AppCompatActivity {
             master.execute(task);
         }
 
+    }
+
+    public void testModifyVari(View v) {
+//        Student student = new Student();
+//        student.setAge(0);
+//
+//        List<Student> list = new ArrayList<>();
+//        list.add(student);
+//
+//        modify(list.get(0));
+//        // 测试机log.d是没问题，正式售卖的机器系统是不答应log的哦, log.i没问题
+//        Log.i("DaoExample", "age:"+list.get(0).getAge());
+//
+//        Log.i("DaoExample", "age:"+student.getAge());
+        String s =
+                "packagenames=com.baidu.homework%2Ccom.vsco.cam%2Cso.ofo.labofo%2Ccom.hkairlines.apps%2Ccom.letv.whatslive%2Ccom.zcbl.bjjj_driving%2Cfm.qingting.qtradio%2Ccom.qiyi.video%2Ccom.rytong.airchina%2Ccom.sohu.inputmethod.sogou%2Ccom.mogujie%2Ccom.gtgj.view%2Ccom.android.bankabc%2Ccom.sankuai.meituan%2Ccom.airasia.mobile%2Ccom.youku.phone%2Ccom.cgbchina.xpt%2Cair.tv.douyu.android%2Ccom.tencent.qqmusic%2Ccom.sinovatech.unicom.ui%2Ccom.letv.android.letvlive%2Ccom.lesports.glivesports%2Ccom.csair.mbp%2Ccom.hexin.plat.android%2Ccom.smzdm.client.android%2Ccom.wandoujia.phoenix2.usbproxy%2Ccom.dianping.v1%2Ccom.mt.mtxx.mtxx%2Ccom.taou.maimai%2Ccmb.pb%2Ccom.cebbank.bankebb%2Ccom.jm.android.jumei%2Ccom.MobileTicket%2Ccom.letv.letvshop%2Ccom.tudou.android%2Ccom.xingin.xhs%2Ccom.bankcomm.Bankcomm%2Ccom.ifeng.news2%2Ccom.tencent.mm%2Ccom.rytong.app.bankhx%2Ccom.anjuke.android.app%2Ccom.bw30.zsch%2Ccom.sdu.didi.psnger%2Ccom.chinamworld.bocmbci%2Ccom.xunlei.downloadprovider%2Ccom.tencent.android.qqdownloader%2Ccn.amazon.mShop.android%2Cvz.com%2Ccom.xiangha%2Ccom.codoon.gps%2Ccom.lufax.android%2Ccom.tencent.qqpim%2Ccom.tencent.ttpic%2Ccom.yibasan.lizhifm%2Ccom.icbc%2Ccom.szzc%2Ccom.wuba%2Ccom.letv.android.client%2Ccom.mfw.roadbook%2Ccom.futurestar.mkmyle%2Ccom.le123.ysdq%2Ccom.shoujiduoduo.ringtone%2Ccom.beastbike.bluegogo%2Ccn.com.spdb.mobilebank.per%2Ccom.ichinait.gbpassenger%2Ccom.tencent.qqpimsecure%2Ccom.tencent.qqlive%2Ccom.meitu.meiyancamera%2Ccom.tencent.mtt%2Cfm.xiami.main%2Ccom.thestore.main%2Ccom.lingan.seeyou%2Ccom.cubic.autohome%2Ccom.kdlc.mcc%2Ccom.youdao.dict%2Ccom.kuaikan.comic%2Ccom.UCMobile%2Ccom.letv.kdweibo.client%2Ccom.sohu.sohuvideo%2Ccom.google.android.gms%2Ccom.google.android.gsf%2Ccom.baidu.video%2Ccom.tencent.mobileqq%2Ccom.ivvi.storeApp%2Ccom.pingan.pabank.activity%2Ccom.netease.newsreader.activity%2Ccom.suning.mobile.ebuy%2Ccom.kugou.android%2Ccom.gotokeep.keep%2Ccom.yoloho.dayima%2Ccom.wandoujia.phoenix2%2Ccom.snda.wifilocating%2Ccom.letv.games%2Ccom.jiuyan.infashion%2Ccom.immomo.momo%2Ccom.lphtsccft%2Ccom.air.sz%2Ccom.ximalaya.ting.android%2Ccom.letv.lesophoneclient%2Ccom.baidu.BaiduMap%2Ccom.soufun.app%2Ccom.meitu.meipaimv%2Ccom.tuniu.app.ui%2Ccom.google.android.gsf.login%2Ccom.jd.jrapp%2Ccom.flightmanager.view%2Ccom.pingan.carowner%2Ccom.chinamworld.main%2Ccom.baidu.lbs.waimai%2Ccn.eclicks.wzsearch%2Ccom.Qunar%2Ccom.tongcheng.android%2Ccom.qihoo.appstore%2Ccom.kaola%2Ccom.lashou.groupurchasing%2Ccom.nuomi%2Ccom.qzone%2Ccom.xueqiu.android%2Ccom.ecitic.bank.mobile%2Ccom.rytong.ceair%2Ccom.rytong.hnair%2Ccom.tencent.news%2CvStudio.Android.Camera360%2Ccom.netease.mail%2Ccom.jingdong.app.mall%2Ccom.tencent.karaoke%2Ccom.tmall.wireless%2Ctv.acfundanmaku.video%2Ccom.autonavi.minimap%2Ccom.citiccard.mobilebank%2Ccom.taobao.idlefish%2Cctrip.android.view%2Ccom.p1.mobile.putong%2Ccom.letv.jr%2Ccn.kuwo.player%2Ccom.shuqi.controller%2Ccom.ganji.android.haoche_c%2Cbubei.tingshu%2Ccom.smile.gifmaker%2Ccom.letv.ireader%2Ccom.android.dazhihui%2Ccom.meilishuo%2Ccom.taobao.taobao%2Ccom.china3s.android%2Ccom.cmbchina.ccd.pluto.cmbActivity%2Ccom.microfundrn%2Ccom.netease.cloudmusic%2Ccom.sina.news%2Ctv.danmaku.bili%2Ccom.dp.android.elong%2Ccom.changba%2Ccom.eg.android.AlipayGphone%2Ccom.taobao.ju.android%2Ccom.greenpoint.android.mc10086.activity%2Ccom.achievo.vipshop%2Ccom.qqreader.leshi&versioncodes=296%2C30170413%2C13660%2C201706090%2C68%2C17%2C632%2C80890%2C41600%2C660%2C944000%2C116%2C16%2C532%2C2045%2C129%2C20170623%2C10252200%2C665%2C52%2C130%2C147%2C20170704%2C4296%2C391%2C6215%2C9262%2C6770%2C1215%2C550%2C56%2C4605%2C137%2C10171%2C90%2C422004%2C3111%2C257%2C1080%2C4010%2C321811%2C43%2C250%2C69%2C10910%2C7072130%2C122451910%2C76%2C191%2C900%2C3070100%2C1480%2C496%2C113376%2C300025%2C77%2C71202%2C33000%2C375%2C24%2C67%2C6008330%2C201%2C96%2C35%2C1176%2C12708%2C6210%2C7703440%2C162%2C503%2C89%2C825%2C28%2C7040200%2C43100%2C699%2C606%2C6800%2C9879440%2C23%2C1073700540%2C708%2C100%2C300%2C697%2C173%2C8851%2C8253%2C160%2C16161%2C3130%2C33%2C96%2C1436%2C1700025531%2C56%2C133%2C1054%2C810%2C127%2C6210%2C114%2C23%2C62%2C127%2C3922%2C219%2C101%2C178%2C146%2C142%2C300070091%2C30070500%2C20170612%2C266%2C102%2C133%2C42%2C65%2C54547%2C5400%2C108611%2C120%2C49920%2C101%2C1780%2C440%2C6101%2C58%2C115%2C157%2C129%2C72%2C8503%2C138%2C3201%2C17611%2C4634%2C451%2C90747%2C143%2C159%2C630%2C61%2C40%2C97%2C149%2C510000%2C9302%2C824%2C112%2C474%2C41%2C708%2C10000305";
+        String result = s.replaceAll("%2C", ",");
+        Log.i("DaoExample",result);
+                String arr[] = result.split("&");
+        String pck = arr[0];
+        String ps[] = pck.split("=");
+        Log.i("DaoExample",ps[1]);
+
+        String pckArr[] = ps[1].split(",");
+        int index = -1;
+        for (int i=0; i<pckArr.length; i++) {
+           if (pckArr[i].equals("com.icbc")) {
+               index = i;
+               break;
+           }
+        }
+        Log.i("DaoExample","index:"+index);
+
+        String versionCo = arr[1];
+        String versionCoA[] = versionCo.split("=");
+        String aa[] = versionCoA[1].split(",");
+        Log.i("DaoExample",aa[index]);
+
+    }
+
+    private void modify(Student student) {
+
+        Student student2 = student;
+
+        student2.setAge(student2.getAge()+2);
     }
 }
