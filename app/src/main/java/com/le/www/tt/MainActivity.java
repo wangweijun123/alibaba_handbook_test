@@ -13,25 +13,18 @@ import com.le.www.tt.fork.join.Master;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -363,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         Connection conn = new Connection(index);
                         index++;
-                        pool.addConnection(conn);
+                        pool.put(conn);
                     }
                 }
             }).start();
@@ -373,6 +366,11 @@ public class MainActivity extends AppCompatActivity {
     public void stopCleanThreadPool(View v) {
         Log.i(TAG, "click stopCleanThreadPool");
         pool.quit();
+    }
+
+
+    public void executeTwice(View v) {
+        ConnectionPool.executeTwice();
     }
 
 

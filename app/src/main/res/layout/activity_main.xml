@@ -92,6 +92,13 @@
             android:onClick="stopCleanThreadPool"
             android:text="取消清理线程池" />
 
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="executeTwice"
+            android:text="同一个线程池对象，同一个runnable调用两次" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

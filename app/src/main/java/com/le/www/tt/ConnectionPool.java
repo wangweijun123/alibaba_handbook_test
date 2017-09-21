@@ -68,7 +68,7 @@ public class ConnectionPool {
         }
     };
 
-    private boolean cleanRunning = false;
+    private volatile boolean cleanRunning = false;// 是否停止线程池
 
     public void start() {
         if (!cleanRunning) {
@@ -76,6 +76,7 @@ public class ConnectionPool {
             executor.execute(cleanRunnable);
         }
     }
+
 
     public void quit() {
         if (cleanRunning) {
@@ -85,13 +86,27 @@ public class ConnectionPool {
         }
     }
 
-    public void addConnection(Connection connection) {
+    public void put(Connection connection) {
         synchronized (connections) {
             connections.add(connection);
             Log.i(MainActivity.TAG, Thread.currentThread().getId()+"  add connection "+connection.id+" 总大小 :" + connections.size());
             // 在哪个对象调用connections.wait(), 就在哪个对象调用notifyAll
             connections.notifyAll();
         }
+    }
+
+    public static void  executeTwice() {
+        for (int i=0;i<2;i++) {
+            executor.execute(myRunnable);
+        }
 
     }
+
+    static Runnable myRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Log.i(MainActivity.TAG, "executor xxxx");
+        }
+    };
+
 }
