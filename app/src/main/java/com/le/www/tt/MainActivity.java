@@ -9,6 +9,8 @@ import com.le.www.tt.interceptor.Chain;
 import com.le.www.tt.interceptor.Request;
 import com.le.www.tt.interceptor.Response;
 import com.le.www.tt.fork.join.Master;
+import com.le.www.tt.okhttp.Dispatcher;
+import com.le.www.tt.okhttp.Task;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -577,4 +579,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+    public void testOkhttpDispatcher(View v) {
+        Dispatcher dispatcher = new Dispatcher();
+
+        for (int i=0; i<10; i++) {
+            com.le.www.tt.okhttp.Task task = new com.le.www.tt.okhttp.Task(i, dispatcher);
+            dispatcher.enqueue(task);
+        }
+    }
+
 }

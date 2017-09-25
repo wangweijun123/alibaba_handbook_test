@@ -124,6 +124,13 @@
             android:onClick="testConcurrentHashMap"
             android:text="测试ConcurrentHashMap" />
 
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testOkhttpDispatcher"
+            android:text="测试 Okhttp Dispatcher" />
+
     </LinearLayout>
 
 </ScrollView>
