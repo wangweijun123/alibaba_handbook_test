@@ -142,6 +142,12 @@
             android:layout_height="wrap_content"
             android:onClick="testSyncronizedClassForTheSameObject"
             android:text="测试 Syncronized class (同一个对象)" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testOkhttpDispatcher"
+            android:text="测试 Okhttp Dispatcher" />
+
     </LinearLayout>
 
 </ScrollView>

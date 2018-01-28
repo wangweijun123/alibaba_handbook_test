@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +23,7 @@ public class ConnectionPool {
     private Deque<Connection> connections = new ArrayDeque<>();
 
     private static ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 60L, TimeUnit.SECONDS,
-            new LinkedBlockingQueue<Runnable>(), new ThreadFactory() {
+            new SynchronousQueue<Runnable>(), new ThreadFactory() {
         @Override
         public Thread newThread(@NonNull Runnable r) {
             Thread thread = new Thread(r);
