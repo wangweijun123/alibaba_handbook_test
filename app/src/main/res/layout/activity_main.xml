@@ -124,6 +124,24 @@
             android:onClick="testConcurrentHashMap"
             android:text="测试ConcurrentHashMap" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testSyncronizedThisForTheSameObject"
+            android:text="测试 Syncronized This(同一个对象)" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testSyncronizedThisForDifferentObject"
+            android:text="测试 Syncronized This(不同对象)" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testSyncronizedClassForTheSameObject"
+            android:text="测试 Syncronized class (同一个对象)" />
     </LinearLayout>
 
 </ScrollView>

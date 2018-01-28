@@ -1,14 +1,15 @@
 package com.le.www.tt;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.le.www.tt.fork.join.Master;
 import com.le.www.tt.interceptor.Chain;
 import com.le.www.tt.interceptor.Request;
 import com.le.www.tt.interceptor.Response;
-import com.le.www.tt.fork.join.Master;
+import com.le.www.tt.syncronized.SyncronizedClassAndThisTest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -379,7 +380,6 @@ public class MainActivity extends AppCompatActivity {
         Chain chain = new Chain(request);
         Response response = chain.process();
         Log.i(TAG, "request content:" + request.content + ", response content:" + response.content);
-
     }
 
 
@@ -533,24 +533,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     Map<String, String> map = new ConcurrentHashMap<>();//
-
+//    java.util.concurrent.LinkedBlockingQueue
+    //
     int key = 0;
     public void testConcurrentHashMap(View v) {
         for (int i = 0; i < 1000; i++) {
             map.put(i + "", "i=" + i);
         }
-
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Iterator<Map.Entry<String, String>> iter = map.entrySet().iterator();
-                while (iter.hasNext()) {
-                    Map.Entry<String, String> entry = iter.next();
-                    Log.i("DaoExample", entry.getValue());
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                // 特定顺序的连续操作，调用方也需要同步手段来保证调用的正确性，就算使用那些
+                // 线程安全类，并发包底下的类与Connections.synchronizedConnnnnn()方法
+
+                synchronized (map) {
+                    Iterator<Map.Entry<String, String>> iter = map.entrySet().iterator();
+                    while (iter.hasNext()) {
+                        Map.Entry<String, String> entry = iter.next();
+                        Log.i("DaoExample", entry.getValue());
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -572,9 +577,117 @@ public class MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
                 }
             }
         }).start();
+
     }
+
+    /**
+     * syncronized(this) 与  syncronized(class) 区分
+     * this 是这个对象锁，多个对象多个锁,多线程访问同一对象有线程安全问题
+     *
+     * class 这个类字节码,再jvm中字节码只有一份，所有对象共用一把锁
+     *
+     * @param v
+     */
+    public void testSyncronizedThisForTheSameObject(View v) {
+        // 多线程访问同一个对象(注意是同一个对象)才会有线程安全的case
+        final SyncronizedClassAndThisTest test = new SyncronizedClassAndThisTest();
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test.testSyncronizedThis();
+            }
+        });
+        t1.setName("t1");
+        t1.start();
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test.testSyncronizedThis();
+            }
+        });
+        t2.setName("t2");
+        t2.start();
+    }
+
+    /**
+     *
+     * @param v
+     */
+    public void testSyncronizedThisForDifferentObject(View v) {
+
+        final SyncronizedClassAndThisTest test = new SyncronizedClassAndThisTest();
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test.testSyncronizedThis();
+            }
+        });
+        t1.setName("t1");
+        t1.start();
+
+        final SyncronizedClassAndThisTest test2 = new SyncronizedClassAndThisTest();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test2.testSyncronizedThis();
+            }
+        });
+        t2.setName("t2");
+        t2.start();
+    }
+
+
+    public void testSyncronizedClassForTheSameObject(View v) {
+        // 多线程访问同一个对象(注意是同一个对象)才会有线程安全的case
+        final SyncronizedClassAndThisTest test = new SyncronizedClassAndThisTest();
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test.testSyncronizedClass();
+            }
+        });
+        t1.setName("t1");
+        t1.start();
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test.testSyncronizedClass();
+            }
+        });
+        t2.setName("t2");
+        t2.start();
+    }
+
+    public void testSyncronizedClassForDifferentObject(View v) {
+
+        final SyncronizedClassAndThisTest test = new SyncronizedClassAndThisTest();
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test.testSyncronizedClass();
+            }
+        });
+        t1.setName("t1");
+        t1.start();
+
+        final SyncronizedClassAndThisTest test2 = new SyncronizedClassAndThisTest();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test2.testSyncronizedClass();
+            }
+        });
+        t2.setName("t2");
+        t2.start();
+    }
+
 }
